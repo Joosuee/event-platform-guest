@@ -24,10 +24,10 @@ export default function AboutSection({ honorees, people }) {
       {publicPeople.length > 0 && (
         <div style={{ marginTop: bios.length > 0 ? 32 : 0 }}>
           <p className="section-eyebrow">Con cariño de</p>
-          <h2 className="section-title">Quiénes lo hacen posible</h2>
+          <h2 className="section-title">Agradecimientos especiales:</h2>
           <div className="chip-row">
             {publicPeople.map((p) => (
-              <span className="chip" key={p.event_person_id}>{p.role_name}: {p.full_name}</span>
+              <span className="chip" key={p.event_person_id}> {p.full_name}: { p.role_name}</span>
             ))}
           </div>
         </div>

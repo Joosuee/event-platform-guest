@@ -13,9 +13,12 @@ import ScheduleSection from '../components/ScheduleSection';
 import DressCodeSection from '../components/DressCodeSection';
 import AboutSection from '../components/AboutSection';
 import SongsSection from '../components/SongsSection';
+import AssetCarousel from '../components/AssetCarousel';
+import MusicPlayer from '../components/MusicPlayer';
 import GiftsSection from '../components/GiftsSection';
 import ThanksSection from '../components/ThanksSection';
 import GallerySection from '../components/GallerySection';
+import DressReferenceNotice from '../components/DressReferenceNotice';
 import NavBar from '../components/NavBar';
 
 export default function InvitePage() {
@@ -114,6 +117,8 @@ export default function InvitePage() {
 
         <AboutSection honorees={honorees} people={people} />
 
+        <AssetCarousel eventId={event.event_id} />
+
         <LocationsSection locations={locations} />
         <ScheduleSection schedule={schedule} />
         <DressCodeSection event={event} />
@@ -130,6 +135,8 @@ export default function InvitePage() {
           guestName={invitation.representative_name}
         /> */}
 
+        <MusicPlayer />
+
         <GiftsSection eventId={event.event_id} token={token} />
 
         <ThanksSection
@@ -137,6 +144,8 @@ export default function InvitePage() {
           token={token}
           guestName={invitation.representative_name}
         />
+
+        <DressReferenceNotice eventId={event.event_id} />
 
         <RsvpSection
           invitation={invitation}
