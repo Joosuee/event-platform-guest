@@ -4,7 +4,7 @@ import { eventApi } from '../api/event.api';
 // ⚠️ Pon aquí los asset_id exactos que quieres mostrar (los ves en la
 // respuesta de GET /events/:eventId/assets, o en la pestaña "Contenido del
 // evento" del panel — cada tarjeta corresponde a un asset_id).
-const FEATURED_ASSET_IDS = [32, 33, 38, 39, 40, 41, 42];
+const FEATURED_ASSET_IDS = [43, 44, 45, 46, 47];
 
 export default function AssetCarousel({ eventId, intervalMs = 5000 }) {
     const [photos, setPhotos] = useState([]);

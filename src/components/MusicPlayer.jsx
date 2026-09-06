@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 // ⚠️ Reemplaza esto con la URL real de tu canción (un archivo .mp3 que tengas
 // derecho a usar). Puedes subirlo a Cloudinary como recurso "video" (así se
 // suben los audios) o alojarlo donde quieras, siempre que sea una URL directa.
-const SONG_URL = 'https://res.cloudinary.com/dlu7i4umd/video/upload/v1788647178/Mi_Mundo_Gira_Contigo_sqrwfs.mp3';
+const SONG_URL = 'https://res.cloudinary.com/dlu7i4umd/video/upload/v1788655799/mi-mundo-gira-contigo_BpEP3JQA_v2g5ls.mp3';
 
 export default function MusicPlayer() {
   const audioRef = useRef(null);
