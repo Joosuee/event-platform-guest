@@ -22,10 +22,16 @@ export default function DressCodeSection({ event }) {
         <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginTop: 16 }}>
           {looks.map((look) => (
             <div key={look.asset_id}>
-              <img 
+              <img
                 src={look.file_url}
                 alt={look.caption || 'Referencia de vestimenta'}
-                style={{ width: '100%', height: 300, objectFit: 'cover', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}
+                style={{
+                  width: '100%',
+                  height: 150,
+                  objectFit: 'contain',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--color-border)'
+                }}
               />
               {look.caption && (
                 <p className="text-sm text-muted" style={{ marginTop: 6, textAlign: 'center' }}>{look.caption}</p>
@@ -34,6 +40,7 @@ export default function DressCodeSection({ event }) {
           ))}
         </div>
       )}
+      <p>(Preferentemete formal)</p>
     </section>
   );
 }

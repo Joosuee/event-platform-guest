@@ -25,40 +25,25 @@ export default function GiftsSection({ eventId, token }) {
   return (
     <section className="section">
       <p className="section-eyebrow">Un detalle</p>
-      <h2 className="section-title">Mesa de regalos</h2>
-      <p className="section-lead">Tu presencia es el mejor regalo, pero si quieres consentir, aquí unas ideas.</p>
+      <h2 className="section-title">Lluvia de sobres</h2>
+      <p className="section-lead">Tu presencia es el mejor regalo.</p>
 
       {error && <div className="banner-error">{error}</div>}
 
-      <div className="card">
+      <div className="">
         {(gifts || []).map((g) => (
           <div className="list-row" key={g.gift_id}>
             <div>
-              <p className="list-row__title">{g.title}</p>
-              {g.description && <p className="list-row__subtitle">{g.description}</p>}
-              {g.price && <p className="list-row__subtitle">${g.price}</p>}
+              <img src={g.external_url} alt="sobre" style={{ borderRadius: '1200px' }} />
             </div>
-            {g.status === 'available' ? (
-              <button
-                className="btn btn--outline"
-                style={{ padding: '8px 16px', fontSize: 13 }}
-                disabled={reservingId === g.gift_id}
-                onClick={() => handleReserve(g.gift_id)}
-              >
-                {reservingId === g.gift_id ? 'Reservando…' : 'Reservar'}
-              </button>
-            ) : (
-              <span className={`gift-status gift-status--${g.status}`}>
-                {g.status === 'reserved' ? 'Reservado' : 'Comprado'}
-              </span>
-            )}
+
           </div>
         ))}
       </div>
 
       {(gifts || []).some((g) => g.external_url) && (
         <p className="text-sm text-muted" style={{ marginTop: 12 }}>
-          Algunos regalos tienen link directo a tienda dentro de su descripción.
+          
         </p>
       )}
     </section>
