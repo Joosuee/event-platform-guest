@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 
-// Paleta de referencia (ajústala a tu gusto — son solo valores de partida
-// inspirados en tu diseño, no tienen que quedar exactos).
+// Paleta de referencia (ajústala a tu gusto)
 const COLORS = {
     bgTop: '#1a1433',
     bgBottom: '#0d0a1c',
@@ -16,7 +15,7 @@ const COLORS = {
 };
 
 const CANVAS_WIDTH = 1080;
-const CANVAS_HEIGHT = 1350; // 4:5, cómodo para compartir en WhatsApp/Instagram
+const CANVAS_HEIGHT = 1350; // 4:5, ideal para historias / WhatsApp
 
 function drawRoundedRect(ctx, x, y, w, h, r) {
     ctx.beginPath();
@@ -28,8 +27,6 @@ function drawRoundedRect(ctx, x, y, w, h, r) {
     ctx.closePath();
 }
 
-// Reparte texto en varias líneas según un ancho máximo; devuelve el "y"
-// donde quedó la última línea, para poder seguir dibujando debajo.
 function wrapText(ctx, text, x, y, maxWidth, lineHeight, options = {}) {
     const { align = 'center', maxLines } = options;
     const words = text.split(' ');
@@ -47,7 +44,6 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight, options = {}) {
     });
     if (line) lines.push(line);
 
-    // Si se pasan más líneas de las permitidas, recorta y agrega "…"
     if (maxLines && lines.length > maxLines) {
         lines = lines.slice(0, maxLines);
         let lastLine = lines[maxLines - 1];
@@ -66,7 +62,6 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight, options = {}) {
     return cursorY;
 }
 
-// Partículas estáticas de fondo (se "hornean" en la imagen, no se animan).
 function drawParticles(ctx, w, h) {
     const count = 90;
     for (let i = 0; i < count; i++) {
@@ -82,13 +77,17 @@ function drawParticles(ctx, w, h) {
 
 function formatDate(dateStr) {
     return new Date(dateStr.replace(' ', 'T')).toLocaleDateString('es-MX', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
     });
 }
 
 function formatTime(dateStr) {
     return new Date(dateStr.replace(' ', 'T')).toLocaleTimeString('es-MX', {
-        hour: '2-digit', minute: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
     });
 }
 
@@ -100,8 +99,6 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
     async function handleGenerate() {
         setGenerating(true);
 
-        // Espera a que las tipografías estén listas; si no, canvas usa una
-        // fuente de respaldo genérica y se ve distinto al resto de la página.
         if (document.fonts?.ready) await document.fonts.ready;
 
         const canvas = canvasRef.current;
@@ -117,7 +114,6 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
         ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // Resplandor decorativo (en vez de intentar dibujar una bola de disco literal)
         const glow = ctx.createRadialGradient(centerX, 220, 20, centerX, 220, 420);
         glow.addColorStop(0, COLORS.glow);
         glow.addColorStop(1, 'rgba(242, 167, 216, 0)');
@@ -143,9 +139,10 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
         y = wrapText(ctx, honoreeNames, centerX, y, 880, 78);
 
         y += 60;
-        const phrase = honorees?.[0]?.bio
-            || honorees?.[0]?.title
-            || 'Un día para recordar y compartir en familia.';
+        const phrase =
+            honorees?.[0]?.bio ||
+            honorees?.[0]?.title ||
+            'Un día para recordar y compartir en familia.';
         ctx.fillStyle = COLORS.inkSoft;
         ctx.font = 'italic 400 30px Fraunces, serif';
         y = wrapText(ctx, `"${phrase}"`, centerX, y, 760, 40);
@@ -169,7 +166,7 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
         ctx.font = '24px serif';
         ctx.fillText('✦', centerX, y + 8);
 
-        // --- Tarjetas de ubicación (hasta 2: ceremonia / recepción) ---
+        // --- Tarjetas de ubicación ---
         y += 70;
         const shownLocations = (locations || []).slice(0, 2);
         const cardW = shownLocations.length === 2 ? 460 : 760;
@@ -260,18 +257,14 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
         setGenerating(false);
     }
 
-    async function handleSaveImage() {
+    async function handleShare() {
         if (!imageUrl) return;
 
         try {
-            // Convierte el data URL del canvas a un archivo real, para poder
-            // compartirlo/guardarlo (los navegadores no comparten data: URLs directo).
             const response = await fetch(imageUrl);
             const blob = await response.blob();
             const file = new File([blob], 'mi-invitacion.png', { type: 'image/png' });
 
-            // iOS/Android modernos: abre el menú nativo de "Compartir", que incluye
-            // "Guardar en Fotos" — esto SÍ funciona en Safari, a diferencia de <a download>.
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
@@ -280,13 +273,10 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
                 return;
             }
         } catch (err) {
-            // El usuario canceló el share, o el navegador lo rechazó a medias:
-            // seguimos con el respaldo de abajo en vez de dejarlo sin hacer nada.
+            // Si el usuario cancela o hay algún error menor, no se interrumpe el flujo
         }
 
-        // Respaldo (navegadores sin Web Share API, ej. Safari viejo o escritorio):
-        // abre la imagen en una pestaña nueva para que la guarde manteniendo
-        // presionado ("Guardar imagen"/"Añadir a Fotos").
+        // Respaldo para navegadores de escritorio o sin soporte para compartir archivos
         window.open(imageUrl, '_blank');
     }
 
@@ -302,20 +292,36 @@ export default function InvitationCardGenerator({ event, locations, invitation, 
                 {generating ? 'Generando…' : '🎉 Generar mi invitación'}
             </button>
 
-            {/* El canvas real nunca se muestra; solo se usa para "pintar" la imagen */}
+            {/* Canvas oculto para pintar la imagen */}
             <canvas ref={canvasRef} style={{ display: 'none' }} />
 
             {imageUrl && (
                 <div className="invitation-card-preview">
-                    <img src={imageUrl} alt="Tu invitación" />
-                    <div className="btn-row" style={{ marginTop: 16 }}>
-                        <button className="btn btn--outline" onClick={handleSaveImage}>
-                            Guardar / Compartir
+                    <img src={imageUrl} alt="Tu invitación" style={{ maxWidth: '100%', height: 'auto' }} />
+
+                    <div
+                        className="btn-row"
+                        style={{
+                            marginTop: 16,
+                            display: 'flex',
+                            gap: 12,
+                            justifyContent: 'center',
+                            flexWrap: 'wrap',
+                        }}
+                    >
+                        {/* Botón de descarga directa */}
+                        <a className="btn btn--outline" href={imageUrl} download="mi-invitacion.png" style={{ textDecoration: 'none' }}>
+                            📥 Descargar
+                        </a>
+
+                        {/* Botón para compartir nativo (WhatsApp, apps, etc.) */}
+                        <button className="btn btn--outline" onClick={handleShare}>
+                            📤 Compartir
                         </button>
                     </div>
+
                     <p className="text-sm text-muted" style={{ marginTop: 10 }}>
-                        Si no se abre el menú de compartir, mantén presionada la imagen
-                        de arriba y elige "Guardar imagen".
+                        Si estás en un celular, también puedes mantener presionada la imagen para guardarla en tu galería.
                     </p>
                 </div>
             )}
