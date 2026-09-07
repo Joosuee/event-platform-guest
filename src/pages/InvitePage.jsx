@@ -12,6 +12,7 @@ import LocationsSection from '../components/LocationsSection';
 import ScheduleSection from '../components/ScheduleSection';
 import DressCodeSection from '../components/DressCodeSection';
 import AboutSection from '../components/AboutSection';
+import InvitationCardGenerator from '../components/InvitationCardGenerator';
 import SongsSection from '../components/SongsSection';
 import AssetCarousel from '../components/AssetCarousel';
 import MusicPlayer from '../components/MusicPlayer';
@@ -111,7 +112,7 @@ export default function InvitePage() {
         <NavBar token={token}></NavBar>
 
         <HeroSection event={event} honorees={honorees} />
-        
+
         <div className="divider">✦</div>
 
 
@@ -151,6 +152,13 @@ export default function InvitePage() {
           invitation={invitation}
           onInvitationChange={setInvitation}
           token={token}
+        />
+
+        <InvitationCardGenerator
+          event={event}
+          locations={locations}
+          invitation={invitation}
+          honorees={honorees}
         />
 
         <footer className="page-footer">
