@@ -1300,3 +1300,14 @@ footer.page-footer {
     padding-top: var(--space-4);
   }
 }
+
+.thanks-wall {
+  margin-top: 16px;
+}
+
+.thanks-wall__viewport {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  touch-action: pan-y; /* deja hacer scroll vertical normal, solo captura el gesto horizontal */
+}
