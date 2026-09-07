@@ -40,7 +40,7 @@ export default function DressCodeSection({ event }) {
           ))}
         </div>
       )}
-      <p>(Preferentemete formal)</p>
+      <p className="section-eyebrow">(Preferentemete formal)</p>
     </section>
   );
 }

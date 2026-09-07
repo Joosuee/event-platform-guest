@@ -19,12 +19,12 @@ function roleGroupLabel(roleCode) {
 // "Personas" del panel de organizador. El que no tenga id en esta lista
 // usa el mensaje genérico de abajo.
 const THANK_YOU_MESSAGES = {
-  7: 'Gracias por acompañarnos siempre y por tanto amor incondicional.',
-  8: 'Por cada consejo y por creer en nosotros desde el primer día.',
-  10: 'Gracias por ser cómplices de tantas aventuras.',
+  7: 'Gracias por acompañarme siempre y por tanto amor incondicional.',
+  8: 'Por cada consejo y por creer en mi desde el primer día.',
+  10: 'Gracias por ser cómplice de tantas aventuras.',
 };
 
-const DEFAULT_THANK_YOU = 'Gracias por ser parte de este día tan especial para nosotros.';
+const DEFAULT_THANK_YOU = 'Gracias por ser parte de este día tan especial para mi.';
 
 // Agrupa a las personas por su "rol grande" (Padrinos, Padres, Hermanos,
 // Especiales...), respetando el orden en que van apareciendo.
