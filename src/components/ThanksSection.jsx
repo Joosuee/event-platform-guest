@@ -92,15 +92,17 @@ export default function ThanksSection({ eventId, token, guestName }) {
         </form>
       </div>
 
-      {!loading && currentMessages.length > 0 && (
+            {!loading && currentMessages.length > 0 && (
         <div className="thanks-wall">
           <div className="thanks-wall__viewport" {...swipeHandlers}>
-            {currentMessages.map((m) => (
-              <div className="card" key={m.message_id}>
-                <p style={{ fontStyle: 'italic' }}>"{m.message_text}"</p>
-                <p className="text-sm text-muted" style={{ marginTop: 6 }}>— {m.author_name || 'Anónimo'}</p>
-              </div>
-            ))}
+            <div className="thanks-wall__page" key={page}>
+              {currentMessages.map((m) => (
+                <div className="card" key={m.message_id}>
+                  <p style={{ fontStyle: 'italic' }}>"{m.message_text}"</p>
+                  <p className="text-sm text-muted" style={{ marginTop: 6 }}>— {m.author_name || 'Anónimo'}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {pageCount > 1 && (

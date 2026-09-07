@@ -1137,6 +1137,7 @@ footer.page-footer {
   overflow: hidden;
   background: var(--color-surface-sunken);
   border: 1px solid var(--color-border);
+  touch-action: pan-y;
 }
 
 .asset-carousel__image {
@@ -1147,10 +1148,12 @@ footer.page-footer {
   object-fit: contain; /* respeta horizontal/vertical sin deformar */
   opacity: 0;
   transition: opacity 700ms ease;
+  -webkit-touch-callout: none;
 }
 
 .asset-carousel__image--active {
   opacity: 1;
+  transform: scale(1);
 }
 
 .asset-carousel__caption {
@@ -1309,5 +1312,30 @@ footer.page-footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  touch-action: pan-y; /* deja hacer scroll vertical normal, solo captura el gesto horizontal */
+  touch-action: pan-y;
+  overflow: hidden; /* para que la animación no se salga del contenedor */
+}
+
+.thanks-wall__page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: thanks-fade-in 450ms ease;
+}
+
+@keyframes thanks-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thanks-wall__page {
+    animation: none;
+  }
 }
