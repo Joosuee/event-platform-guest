@@ -30,7 +30,7 @@ export default function ThanksSection({ eventId, token, guestName }) {
       setPage((p) => (p + 1) % pageCount);
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
-  }, [pageCount]);
+  }, [pageCount, page]);
 
   function goNext() {
     if (pageCount < 2) return;

@@ -26,7 +26,7 @@ export default function AssetCarousel({ eventId, intervalMs = 5000 }) {
     if (photos.length < 2) return undefined;
     const timer = setInterval(() => setIndex((i) => (i + 1) % photos.length), intervalMs);
     return () => clearInterval(timer);
-  }, [photos.length, intervalMs]);
+  }, [photos.length, intervalMs, index]);
 
   function goNext() {
     setIndex((i) => (i + 1) % photos.length);
