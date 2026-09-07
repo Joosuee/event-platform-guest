@@ -111,12 +111,12 @@ export default function InvitePage() {
 
         <NavBar token={token}></NavBar>
 
-        <HeroSection event={event} honorees={honorees} />
+        <HeroSection event={event} honorees={honorees}/>
 
         <div className="divider">✦</div>
 
 
-        <AboutSection honorees={honorees} people={people} />
+        <AboutSection honorees={honorees} people={people} token={token} />
 
         <AssetCarousel eventId={event.event_id} />
 
