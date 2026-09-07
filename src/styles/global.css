@@ -1215,3 +1215,88 @@ footer.page-footer {
   margin-top: 6px;
   line-height: 1.5;
 }
+
+
+/* ---------- Agradecimientos especiales ---------- */
+
+.thanks-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.thanks-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+
+.thanks-card__role {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+
+.thanks-card__people {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.thanks-person {
+  flex: 1 1 160px;
+  padding: 0 var(--space-4);
+}
+
+/* Línea divisoria entre personas de la misma tarjeta (padrino | madrina, etc.) */
+.thanks-person + .thanks-person {
+  border-left: 1px solid var(--color-border);
+}
+
+.thanks-person__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1.2;
+  font-size: 20px;
+}
+
+.thanks-person__message {
+  font-size: 12.5px;
+  color: var(--color-ink-soft);
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+/* Una sola persona en el grupo: nombre más grande, ocupa todo el ancho */
+.thanks-card--solo .thanks-person {
+  flex: 1 1 100%;
+  border-left: none;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.thanks-card--solo .thanks-person__name {
+  font-size: 26px;
+}
+
+/* En pantallas angostas, si hay varias personas, se apilan en vez de
+   quedar muy comprimidas una junto a otra */
+@media (max-width: 420px) {
+  .thanks-card__people {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .thanks-person + .thanks-person {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
+  }
+}

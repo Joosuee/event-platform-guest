@@ -10,18 +10,18 @@ export default function ScheduleSection({ schedule }) {
 
       <div className="section-stack">
         {schedule.map((item) => (
-          <div className={`schedule-item schedule-item--${item.status}`} key={item.schedule_id}>
+          <div className={`schedule-item schedule-item--${item.status}`} key={item.schedule_id}  style={{ alignItems: 'center', justifyContent:'space-around' }}>
             <span className="schedule-item__time">
               {item.scheduled_time
                 ? new Date(item.scheduled_time.replace(' ', 'T')).toLocaleTimeString('es-MX', {
-                    hour: '2-digit', minute: '2-digit',
-                  })
+                  hour: '2-digit', minute: '2-digit',
+                })
                 : '—'}
             </span>
             <div>
               <p style={{ fontWeight: 600 }}>{item.title}</p>
               {item.description && <p className="text-sm text-muted">{item.description}</p>}
-              <p className="schedule-item__status">{STATUS_LABEL[item.status]}</p>
+              {/* <p className="schedule-item__status">{STATUS_LABEL[item.status]}</p> */}
             </div>
           </div>
         ))}

@@ -111,7 +111,7 @@ export default function InvitePage() {
         <NavBar token={token}></NavBar>
 
         <HeroSection event={event} honorees={honorees} />
-
+        
         <div className="divider">✦</div>
 
 

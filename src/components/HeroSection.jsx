@@ -19,7 +19,7 @@ export default function HeroSection({ event, honorees }) {
       <h1 className="hero__title">{names || event.name}</h1>
 
       {mainTitle && <p className="hero__subtitle">"{mainTitle}"</p>}
-      <p className="hero__date">
+      <p className="hero__date" style={{ 'fontSize': 20 }}>
         {new Date(event.event_datetime.replace(' ', 'T')).toLocaleDateString('es-MX', {
           weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
         })}

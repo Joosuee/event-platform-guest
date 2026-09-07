@@ -26,24 +26,26 @@ export default function GiftsSection({ eventId, token }) {
     <section className="section">
       <p className="section-eyebrow">Un detalle</p>
       <h2 className="section-title">Lluvia de sobres</h2>
-      <p className="section-lead">Tu presencia es el mejor regalo.</p>
+      <p className="section-lead">Tu presencia es el mejor regalo. Pero si quieres un detalle para mi, aqui te dejo una opción.</p>
 
       {error && <div className="banner-error">{error}</div>}
 
       <div className="">
         {(gifts || []).map((g) => (
-          <div className="list-row" key={g.gift_id}>
+          <div className="list-row" key={g.gift_id} style={{ justifyContent: 'center' }}>
             <div>
-              <img src={g.external_url} alt="sobre" style={{ borderRadius: '1200px' }} />
+              <img src={g.external_url} alt="sobre" style={{ borderRadius: '1200px', 'maxWidth': '200px' }} />
             </div>
 
           </div>
         ))}
       </div>
 
+      <p className="section-eyebrow">La tradición de regalar un sobre con dinero.</p>
+
       {(gifts || []).some((g) => g.external_url) && (
         <p className="text-sm text-muted" style={{ marginTop: 12 }}>
-          
+
         </p>
       )}
     </section>
