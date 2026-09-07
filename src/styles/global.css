@@ -1309,33 +1309,50 @@ footer.page-footer {
 }
 
 .thanks-wall__viewport {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  position: relative;
   touch-action: pan-y;
-  overflow: hidden; /* para que la animación no se salga del contenedor */
 }
 
 .thanks-wall__page {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  animation: thanks-fade-in 1000ms ease;
-}
-
-@keyframes thanks-fade-in {
-  from {
-    opacity: 0;
-    transform: translateX(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .thanks-wall__page {
+    animation: none;
+  }
+}
+
+
+/* La que entra: fluye normal, empuja el alto del contenedor */
+.thanks-wall__page--in {
+  animation: thanks-fade-in 1000ms ease;
+}
+
+/* La que sale: se saca del flujo (position:absolute) para que no empuje
+   el layout, y se desvanece encima mientras la nueva ya está entrando */
+.thanks-wall__page--out {
+  position: absolute;
+  inset: 0;
+  animation: thanks-fade-out 1000ms ease forwards;
+  pointer-events: none;
+}
+
+@keyframes thanks-fade-in {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes thanks-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateX(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thanks-wall__page--in,
+  .thanks-wall__page--out {
     animation: none;
   }
 }

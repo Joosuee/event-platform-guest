@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { thanksApi } from '../api/interactivity.api';
 import { useApi } from '../hooks/useApi';
 import { useSwipe } from '../hooks/useSwipe';
@@ -12,37 +12,52 @@ export default function ThanksSection({ eventId, token, guestName }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
   const [page, setPage] = useState(0);
+  const [outgoing, setOutgoing] = useState(null); // tarjetas que se están desvaneciendo
+  const outgoingTimer = useRef(null);
 
   const visible = (messages || []).filter((m) => ['approved', 'shown'].includes(m.display_status));
   const pageCount = Math.ceil(visible.length / PAGE_SIZE);
+  const currentMessages = visible.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   // Si llegan mensajes nuevos y la página actual ya no existe, regresa a la primera.
   useEffect(() => {
     if (page >= pageCount) setPage(0);
   }, [pageCount, page]);
 
-  // Cambia de tanda sola cada AUTO_ADVANCE_MS, sin cortar si el usuario ya
-  // está interactuando (se reinicia solo al cambiar de página).
+  // Cambia de página guardando primero lo que se veía, para poder
+  // desvanecerlo en vez de que desaparezca de golpe.
+  function changePage(nextPage) {
+    setOutgoing(currentMessages);
+    clearTimeout(outgoingTimer.current);
+    outgoingTimer.current = setTimeout(() => setOutgoing(null), 1000); // debe coincidir con la duración del CSS
+    setPage(nextPage);
+  }
+
+  useEffect(() => () => clearTimeout(outgoingTimer.current), []); // limpieza al desmontar
+
+  // Cambia de tanda sola cada AUTO_ADVANCE_MS. Al incluir "page" en las
+  // dependencias, cualquier cambio (automático o por swipe) reinicia el
+  // conteo desde cero en vez de sumarse al tiempo que ya había corrido.
   useEffect(() => {
     if (pageCount < 2) return undefined;
     const timer = setInterval(() => {
-      setPage((p) => (p + 1) % pageCount);
+      changePage((page + 1) % pageCount);
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageCount, page]);
 
   function goNext() {
     if (pageCount < 2) return;
-    setPage((p) => (p + 1) % pageCount);
+    changePage((page + 1) % pageCount);
   }
   function goPrev() {
     if (pageCount < 2) return;
-    setPage((p) => (p - 1 + pageCount) % pageCount);
+    changePage((page - 1 + pageCount) % pageCount);
   }
   const swipeHandlers = useSwipe({ onSwipeLeft: goNext, onSwipeRight: goPrev });
-
-  const currentMessages = visible.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -92,10 +107,20 @@ export default function ThanksSection({ eventId, token, guestName }) {
         </form>
       </div>
 
-            {!loading && currentMessages.length > 0 && (
+      {!loading && (currentMessages.length > 0 || outgoing) && (
         <div className="thanks-wall">
           <div className="thanks-wall__viewport" {...swipeHandlers}>
-            <div className="thanks-wall__page" key={page}>
+            {outgoing && (
+              <div className="thanks-wall__page thanks-wall__page--out">
+                {outgoing.map((m) => (
+                  <div className="card" key={m.message_id}>
+                    <p style={{ fontStyle: 'italic' }}>"{m.message_text}"</p>
+                    <p className="text-sm text-muted" style={{ marginTop: 6 }}>— {m.author_name || 'Anónimo'}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="thanks-wall__page thanks-wall__page--in" key={page}>
               {currentMessages.map((m) => (
                 <div className="card" key={m.message_id}>
                   <p style={{ fontStyle: 'italic' }}>"{m.message_text}"</p>
