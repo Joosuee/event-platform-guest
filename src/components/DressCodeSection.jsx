@@ -40,7 +40,6 @@ export default function DressCodeSection({ event }) {
           ))}
         </div>
       )}
-      <p className="section-eyebrow" style={{marginTop:20}}>(Preferentemente formal)</p>
     </section>
   );
 }
