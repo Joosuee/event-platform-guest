@@ -111,7 +111,7 @@ export default function InvitePage() {
 
         <NavBar token={token}></NavBar>
 
-        <HeroSection event={event} honorees={honorees}/>
+        <HeroSection event={event} honorees={honorees} />
 
         <div className="divider">✦</div>
 
@@ -164,8 +164,8 @@ export default function InvitePage() {
         <footer className="page-footer">
           {event.hashtag && <p className="hashtag">{event.hashtag}</p>}
           <p style={{ marginTop: 8 }}>Con cariño te esperamos ✦</p>
+          <a style={{ textDecoration: none }} href="https://wa.me/2311005914"><p>Diseña tu invitación aqui.</p></a>
         </footer>
-        <a href="https://wa.me/2311005914">Diseña tu invitación aqui.</a>
       </div>
     </main>
   );
