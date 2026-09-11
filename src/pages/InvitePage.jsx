@@ -166,7 +166,7 @@ export default function InvitePage() {
           <p style={{ marginTop: 8 }}>Con cariño te esperamos ✦</p>
         </footer>
         <section>
-          <a style={{ textDecoration: none }} className="btn btn--primary" href="https://wa.me/2311005914</section>">Diseña tu invitación aqui</a>
+          <a style={{ textDecoration: 'none' }} className="btn btn--primary" href="https://wa.me/2311005914</section>">Diseña tu invitación aqui</a>
         </section>
       </div>
     </main>
