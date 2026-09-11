@@ -165,6 +165,7 @@ export default function InvitePage() {
           {event.hashtag && <p className="hashtag">{event.hashtag}</p>}
           <p style={{ marginTop: 8 }}>Con cariño te esperamos ✦</p>
         </footer>
+        <a href="https://wa.me/2311005914">Diseña tu invitación aqui.</a>
       </div>
     </main>
   );
